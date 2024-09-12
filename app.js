@@ -76,7 +76,7 @@ allSquares.forEach(square => {
     // The dragstart event is called once when the user starts to drag an element.
     square.addEventListener('dragstart', dragStart);
 
-    // The dragover event is called repeatedly while an element is being dragged.
+    // The dragover event is called repeatedly while an element is being dragged over a valid drop target.
     square.addEventListener('dragover', dragOver);
 
     // The drop event is called once when an element is dropped on a valid drop target.
@@ -149,7 +149,13 @@ function dragDrop(event) {
             checkForWin();
             changePlayerTurn();
             return;
+        } else {
+            infoDisplay.textContent = 'you cannot go here!';
+            setTimeout(() => infoDisplay.textContent = '', 2000);
+            return;
         }
+
+
     } else {
         infoDisplay.textContent = 'Not your turn...';
         setTimeout(() => infoDisplay.textContent = '', 1000);
@@ -545,7 +551,7 @@ function revertIds() {
 function checkForWin() {
     // Grab both king elements and put them inside an array
     const kings = Array.from(document.querySelectorAll('#king'));
-
+    
     // If the array is missing a white king, then black player wins
     if (!kings.some(king => king.firstChild.classList.contains('white'))) {
         playerDisplay.parentNode.remove();
